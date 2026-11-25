@@ -1,0 +1,353 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile document",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "currentOrgId": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Organization": {
+      "title": "Organization",
+      "description": "Multi-tenant organization account",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "code": { "type": "string", "maxLength": 20 },
+        "type": { "type": "string" },
+        "address": { "type": "string", "maxLength": 300 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string", "format": "email" },
+        "ownerUid": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "code", "ownerUid"]
+    },
+    "OrgMember": {
+      "title": "OrgMember",
+      "description": "Organization membership and role mapping",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["super_admin", "admin", "petugas", "kepala", "auditor"] },
+        "status": { "type": "string", "enum": ["active", "suspended"] },
+        "addedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "status"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Asset category classification",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "code": { "type": "string", "maxLength": 20 },
+        "description": { "type": "string", "maxLength": 300 },
+        "icon": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "code"]
+    },
+    "Location": {
+      "title": "Location",
+      "description": "Building, floor, and room location",
+      "type": "object",
+      "properties": {
+        "building": { "type": "string", "maxLength": 100 },
+        "floor": { "type": "string", "maxLength": 50 },
+        "roomName": { "type": "string", "maxLength": 100 },
+        "code": { "type": "string", "maxLength": 30 },
+        "notes": { "type": "string", "maxLength": 300 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["building", "roomName", "code"]
+    },
+    "Supplier": {
+      "title": "Supplier",
+      "description": "Vendor and supplier information",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 120 },
+        "contactPerson": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string" },
+        "address": { "type": "string", "maxLength": 300 },
+        "notes": { "type": "string", "maxLength": 300 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name"]
+    },
+    "PIC": {
+      "title": "PIC",
+      "description": "Person In Charge (Penanggung Jawab)",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 120 },
+        "employeeId": { "type": "string", "maxLength": 50 },
+        "department": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name"]
+    },
+    "Asset": {
+      "title": "Asset",
+      "description": "Master inventory asset record",
+      "type": "object",
+      "properties": {
+        "itemCode": { "type": "string", "maxLength": 60 },
+        "name": { "type": "string", "maxLength": 150 },
+        "categoryId": { "type": "string" },
+        "categoryName": { "type": "string" },
+        "brand": { "type": "string", "maxLength": 100 },
+        "model": { "type": "string", "maxLength": 100 },
+        "serialNumber": { "type": "string", "maxLength": 100 },
+        "barcode": { "type": "string", "maxLength": 100 },
+        "type": { "type": "string", "enum": ["fixed_asset", "consumable"] },
+        "unit": { "type": "string", "maxLength": 30 },
+        "quantity": { "type": "number" },
+        "availableQuantity": { "type": "number" },
+        "purchasePrice": { "type": "number" },
+        "totalValue": { "type": "number" },
+        "purchaseDate": { "type": "string" },
+        "fundingSource": { "type": "string", "maxLength": 100 },
+        "invoiceNumber": { "type": "string", "maxLength": 100 },
+        "condition": { "type": "string", "enum": ["good", "lightly_damaged", "heavily_damaged"] },
+        "status": { "type": "string", "enum": ["available", "in_use", "borrowed", "under_maintenance", "disposed"] },
+        "locationId": { "type": "string" },
+        "locationName": { "type": "string" },
+        "picId": { "type": "string" },
+        "picName": { "type": "string" },
+        "supplierId": { "type": "string" },
+        "supplierName": { "type": "string" },
+        "warrantyExpiry": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "notes": { "type": "string", "maxLength": 500 },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["itemCode", "name", "categoryId", "type", "quantity", "condition", "status"]
+    },
+    "StockTransaction": {
+      "title": "StockTransaction",
+      "description": "Stock in and stock out movements",
+      "type": "object",
+      "properties": {
+        "transactionNumber": { "type": "string", "maxLength": 60 },
+        "type": { "type": "string", "enum": ["in", "out", "adjustment"] },
+        "date": { "type": "string" },
+        "source": { "type": "string", "maxLength": 100 },
+        "supplierId": { "type": "string" },
+        "supplierName": { "type": "string" },
+        "recipient": { "type": "string", "maxLength": 100 },
+        "reason": { "type": "string", "maxLength": 300 },
+        "assetId": { "type": "string" },
+        "assetName": { "type": "string" },
+        "quantity": { "type": "number" },
+        "unitPrice": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "locationId": { "type": "string" },
+        "locationName": { "type": "string" },
+        "notes": { "type": "string", "maxLength": 500 },
+        "status": { "type": "string", "enum": ["approved", "pending", "rejected"] },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["transactionNumber", "type", "date", "assetId", "quantity", "status"]
+    },
+    "Loan": {
+      "title": "Loan",
+      "description": "Asset loan and return record",
+      "type": "object",
+      "properties": {
+        "loanNumber": { "type": "string", "maxLength": 60 },
+        "borrowerName": { "type": "string", "maxLength": 120 },
+        "department": { "type": "string", "maxLength": 100 },
+        "contact": { "type": "string", "maxLength": 50 },
+        "assetId": { "type": "string" },
+        "assetName": { "type": "string" },
+        "quantity": { "type": "number" },
+        "loanDate": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "returnDate": { "type": "string" },
+        "conditionOnBorrow": { "type": "string" },
+        "conditionOnReturn": { "type": "string" },
+        "handedBy": { "type": "string" },
+        "receivedBy": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "returned", "overdue"] },
+        "notes": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["loanNumber", "borrowerName", "assetId", "quantity", "loanDate", "dueDate", "status"]
+    },
+    "Transfer": {
+      "title": "Transfer",
+      "description": "Asset mutation between locations or PICs",
+      "type": "object",
+      "properties": {
+        "transferNumber": { "type": "string", "maxLength": 60 },
+        "assetId": { "type": "string" },
+        "assetName": { "type": "string" },
+        "sourceLocationId": { "type": "string" },
+        "sourceLocationName": { "type": "string" },
+        "targetLocationId": { "type": "string" },
+        "targetLocationName": { "type": "string" },
+        "oldPicId": { "type": "string" },
+        "oldPicName": { "type": "string" },
+        "newPicId": { "type": "string" },
+        "newPicName": { "type": "string" },
+        "date": { "type": "string" },
+        "reason": { "type": "string", "maxLength": 300 },
+        "status": { "type": "string", "enum": ["completed", "pending", "rejected"] },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["transferNumber", "assetId", "targetLocationId", "date", "status"]
+    },
+    "Maintenance": {
+      "title": "Maintenance",
+      "description": "Maintenance and repair ticket",
+      "type": "object",
+      "properties": {
+        "ticketNumber": { "type": "string", "maxLength": 60 },
+        "assetId": { "type": "string" },
+        "assetName": { "type": "string" },
+        "maintenanceType": { "type": "string", "enum": ["preventive", "corrective"] },
+        "issueDescription": { "type": "string", "maxLength": 500 },
+        "priority": { "type": "string", "enum": ["low", "medium", "high", "urgent"] },
+        "reportedDate": { "type": "string" },
+        "technicianVendor": { "type": "string", "maxLength": 100 },
+        "estimatedCost": { "type": "number" },
+        "actualCost": { "type": "number" },
+        "startDate": { "type": "string" },
+        "completionDate": { "type": "string" },
+        "status": { "type": "string", "enum": ["reported", "in_progress", "waiting_parts", "completed", "unrepairable"] },
+        "notes": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ticketNumber", "assetId", "issueDescription", "priority", "status"]
+    },
+    "Stocktake": {
+      "title": "Stocktake",
+      "description": "Physical inventory audit and reconciliation",
+      "type": "object",
+      "properties": {
+        "scheduleNumber": { "type": "string", "maxLength": 60 },
+        "title": { "type": "string", "maxLength": 120 },
+        "locationId": { "type": "string" },
+        "locationName": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "categoryName": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "in_progress", "completed"] },
+        "date": { "type": "string" },
+        "notes": { "type": "string", "maxLength": 500 },
+        "conductedBy": { "type": "string" },
+        "approvedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["scheduleNumber", "title", "status", "date"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Security and activity audit log",
+      "type": "object",
+      "properties": {
+        "action": { "type": "string", "maxLength": 100 },
+        "targetType": { "type": "string", "maxLength": 50 },
+        "targetId": { "type": "string", "maxLength": 64 },
+        "details": { "type": "string", "maxLength": 500 },
+        "performedBy": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["action", "performedBy", "timestamp"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "System alerts and notifications",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 120 },
+        "message": { "type": "string", "maxLength": 300 },
+        "type": { "type": "string", "enum": ["warning", "info", "critical", "success"] },
+        "read": { "type": "boolean" },
+        "link": { "type": "string", "maxLength": 100 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "message", "type", "read"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "User",
+      "description": "User profile"
+    },
+    "/organizations/{orgId}": {
+      "schema": "Organization",
+      "description": "Organization tenant root"
+    },
+    "/organizations/{orgId}/members/{uid}": {
+      "schema": "OrgMember",
+      "description": "Organization membership and role"
+    },
+    "/organizations/{orgId}/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Categories for the organization"
+    },
+    "/organizations/{orgId}/locations/{locationId}": {
+      "schema": "Location",
+      "description": "Physical locations and rooms"
+    },
+    "/organizations/{orgId}/suppliers/{supplierId}": {
+      "schema": "Supplier",
+      "description": "Suppliers and vendors"
+    },
+    "/organizations/{orgId}/pics/{picId}": {
+      "schema": "PIC",
+      "description": "Persons in charge"
+    },
+    "/organizations/{orgId}/assets/{assetId}": {
+      "schema": "Asset",
+      "description": "Asset items"
+    },
+    "/organizations/{orgId}/transactions/{transactionId}": {
+      "schema": "StockTransaction",
+      "description": "Stock transactions"
+    },
+    "/organizations/{orgId}/loans/{loanId}": {
+      "schema": "Loan",
+      "description": "Loan records"
+    },
+    "/organizations/{orgId}/transfers/{transferId}": {
+      "schema": "Transfer",
+      "description": "Asset transfers"
+    },
+    "/organizations/{orgId}/maintenance/{maintenanceId}": {
+      "schema": "Maintenance",
+      "description": "Maintenance tickets"
+    },
+    "/organizations/{orgId}/stocktakes/{stocktakeId}": {
+      "schema": "Stocktake",
+      "description": "Stock audit sessions"
+    },
+    "/organizations/{orgId}/auditLogs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Audit trails"
+    },
+    "/organizations/{orgId}/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "In-app notifications"
+    }
+  }
+}

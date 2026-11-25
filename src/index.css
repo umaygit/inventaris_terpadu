@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #F5F7FB;
+    color: #17263C;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  html.dark body {
+    background-color: #070F1E;
+    color: #F1F5F9;
+  }
+}
+
+/* Safe area insets for mobile Android APK screen */
+.safe-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom, 16px), 16px);
+}
+.safe-top {
+  padding-top: max(env(safe-area-inset-top, 0px), 0px);
+}
+
+/* Hide scrollbars for clean mobile APK view */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Print styles for reports, asset labels, and QR codes */
+@media print {
+  @page {
+    size: 215mm 330mm; /* F4 / Folio size */
+    margin: 8mm 6mm;
+  }
+
+  aside, header, nav, .no-print, .mobile-bottom-nav, .backdrop-blur-xs {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .page-break {
+    page-break-after: always;
+  }
+
+  /* Prevent sticker cards from being sliced across pages */
+  .break-inside-avoid, [style*="pageBreakInside: avoid"] {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Physical 5 cm x 3 cm sticker size for printer output */
+  .label-sticker-5x3 {
+    width: 50mm !important;
+    height: 30mm !important;
+    min-width: 50mm !important;
+    max-width: 50mm !important;
+    min-height: 30mm !important;
+    max-height: 30mm !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+}

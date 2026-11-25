@@ -1,0 +1,6 @@
+{
+  "name": "Inventaris Terpadu",
+  "description": "Sistem Manajemen Inventaris dan Aset Terpadu Berbasis Cloud & Multi-Tenant - Kelola Aset, Kendalikan Inventaris.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

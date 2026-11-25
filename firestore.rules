@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User profiles & settings
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Connection testing
+    match /test/connection {
+      allow read, write: if true;
+    }
+
+    // Organization data and all nested subcollections
+    // (members, categories, locations, suppliers, pics, assets, transactions, loans, transfers, maintenance, stocktakes, auditLogs)
+    match /organizations/{orgId} {
+      allow read, write: if true;
+
+      match /{subpath=**} {
+        allow read, write: if true;
+      }
+    }
+
+    // Fallback for root collections if any
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
